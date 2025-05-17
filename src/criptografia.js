@@ -1,16 +1,27 @@
 function gerarChaveSimetrica() {
   // Implementar
   // Retornar qualquer tipo
+  return Math.floor(Math.random() * 25) + 1;
 }
 
 function criptografarSimetrico(mensagem, chave) {
-  // Implementar
-  // Retornar string
+  return mensagem
+    .split('')
+    .map(caractere =>
+      String.fromCharCode(caractere.charCodeAt(0) + chave)
+    )
+    .join('');
 }
 
 function descriptografarSimetrico(mensagemCriptografada, chave) {
-  // Implementar
+  return mensagemCriptografada
+    .split('')
+    .map(caractere =>
+      String.fromCharCode(caractere.charCodeAt(0) - chave)
+    )
+    .join('');
 }
+
 
 function gerarChavesAssimetricas() {
   // Implementar
