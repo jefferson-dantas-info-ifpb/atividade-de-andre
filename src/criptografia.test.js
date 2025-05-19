@@ -67,28 +67,3 @@ describe('Criptografia Assimétrica', () => {
     } catch {}
   })
 })
-
-describe('Hash', () => {
-  test('gera hash para mensagem', () => {
-    const mensagem = 'hash'
-    const hashMensagem = hash(mensagem)
-    expect(typeof hashMensagem).toBe('string')
-    expect(hashMensagem).not.toBe(mensagem)
-    expect(hashMensagem).not.toBe('')
-  })
-
-  test('gera mesmo hash para mesma entrada', () => {
-    const mensagem = 'hash'
-    const hashMensagem1 = hash(mensagem)
-    const hashMensagem2 = hash(mensagem)
-    expect(hashMensagem1).toBe(hashMensagem2)
-  })
-
-  test('gera hashes diferentes para mensagens diferentes', () => {
-    const mensagem1 = 'abc'
-    const mensagem2 = 'def'
-    const hashMensagem1 = hash(mensagem1)
-    const hashMensagem2 = hash(mensagem2)
-    expect(hashMensagem1).not.toBe(hashMensagem2)
-  })
-})

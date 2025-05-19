@@ -4,8 +4,12 @@ const {
   descriptografarSimetrico,
   gerarChavesAssimetricas,
   criptografarAssimetrica,
-  descriptografarAssimetrica,
-  hash
+  descriptografarAssimetrica
 } = require('./criptografia.js')
 
-// Teste aqui os códigos
+const { chavePublica, chavePrivada } = gerarChavesAssimetricas()
+const mensagem = 'Olá, mundo!'
+const mensagemCriptografada = criptografarAssimetrica(mensagem, chavePublica)
+console.log('Mensagem criptografada:', mensagemCriptografada)
+const mensagemDescriptografada = descriptografarAssimetrica(mensagemCriptografada, chavePrivada)
+console.log('Mensagem descriptografada:', mensagemDescriptografada)
