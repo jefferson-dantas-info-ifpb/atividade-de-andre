@@ -39,8 +39,8 @@ const mensagemRealDeJoao = "Olá Ana! Como está as coisas por aí?";
 
 console.log("   - Mensagem que João quer enviar:", chalk.green(mensagemRealDeJoao));
 // João criptografa a mensagem real com a chave secreta de sessão (simétrica)
-const mensagemRealEnviadaParaAna = criptografarSimetrico(mensagemRealDeJoao, chaveSecretaDeSessaoGeradaPorJoao);
-console.log("   - Mensagem real criptografada simetricamente:", chalk.yellow(mensagemRealEnviadaParaAna));
+const mensagemCriptoEnviadaParaAna = criptografarSimetrico(mensagemRealDeJoao, chaveSecretaDeSessaoGeradaPorJoao);
+console.log("   - Mensagem real criptografada simetricamente:", chalk.yellow(mensagemCriptoEnviadaParaAna));
 
 // 2. João Envia a Chave Secreta
 // Criptografa a chave secreta de sessão usando a Chave Pública de Ana.
@@ -54,19 +54,19 @@ console.log("   - Chave Secreta de Sessão criptografada assimetricamente:", cha
 
 // João envia a mensagem real e a chave secreta criptografada para Ana
 console.log("\n   João envia para Ana:");
-console.log("     - A mensagem real criptografada simetricamente: ", chalk.yellow(mensagemRealEnviadaParaAna));
+console.log("     - A mensagem real criptografada simetricamente: ", chalk.yellow(mensagemCriptoEnviadaParaAna));
 console.log("     - A chave secreta de sessão criptografada assimetricamente: ", chalk.yellow(sessaoCriptografadaAssimetricamente));
 
 // Simulando um bisbilhoteiro que intercepta a comunicação
 console.log("\n--- Bisbilhoteiro Intercepta a Comunicação ---");
 console.log(chalk.red("\n--- 👺 Bisbilhoteiro intercepta a comunicação ---"));
-console.log("   - Mensagem interceptada:", chalk.yellow(mensagemRealEnviadaParaAna));
+console.log("   - Mensagem interceptada:", chalk.yellow(mensagemCriptoEnviadaParaAna));
 console.log("   - Chave de sessão criptografada interceptada:", chalk.yellow(sessaoCriptografadaAssimetricamente));
 
 console.log("\n--- Recepção e Descriptografia por Ana ---");
 // Ana recebe os dados enviados de João
 const dadosDeJoao = {
-  mensagemCriptografada: mensagemRealEnviadaParaAna,
+  mensagemCriptografada: mensagemCriptoEnviadaParaAna,
   chaveSecretaCriptografada: sessaoCriptografadaAssimetricamente
 };
 
