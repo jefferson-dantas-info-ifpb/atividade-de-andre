@@ -1,74 +1,100 @@
+const chalk = require('chalk');
+
 const {
   gerarChaveSimetrica,
   criptografarSimetrico,
   descriptografarSimetrico,
   gerarChavesAssimetricas,
   criptografarAssimetrica,
-  descriptografarAssimetrica,
-  hash
-} = require('./criptografia.js')
+  descriptografarAssimetrica
+} = require('./criptografia.js'); 
+
+console.log(chalk.bold.bgBlue.white("\n=== Demonstração de Criptografia Híbrida (Alice e Bob) ===\n"));
+
+// =====================================================================
+// ETAPA 1: PREPARAÇÃO DO RECEPTOR (BOB)
+// Bob gera suas chaves assimétricas (pública e privada).
+// A chave pública pode ser compartilhada, a privada JAMAIS!
+// =====================================================================
+console.log(chalk.blue("--- ETAPA 1: Preparação do Receptor (Bob) ---"));
 
 const { chavePublica: chavePublicaBob, chavePrivada: chavePrivadaBob } = gerarChavesAssimetricas();
-console.log("🔐 Bob gera sua chave pública:", chavePublicaBob);
-console.log("🔓 Bob guarda sua chave privada:", chavePrivadaBob);
+console.log("🔐 Bob gera seu par de chaves assimétricas:");
+console.log("   - Chave Pública de Bob (para criptografar PARA ele):" , chavePublicaBob);
+console.log("   - Chave Privada de Bob (só ele tem, para descriptografar):", chavePrivadaBob);
+console.log("   Bob compartilha sua Chave Pública com Alice (e com quem quiser enviar algo para ele).");
 
-// =========================
-// 👩 Alice quer enviar uma mensagem secreta para Bob
-// =========================
-const mensagemAlice = "Oi Bob, me envie os relatórios.";
-console.log("\n👩 Mensagem de Alice:", mensagemAlice);
+// =====================================================================
+// ETAPA 2: ALICE QUER ENVIAR UMA MENSAGEM
+// Alice prepara a mensagem e a chave para a comunicação.
+// =====================================================================
+console.log("\n--- ETAPA 2: Alice Prepara a Mensagem ---");
 
-// =========================
-// 🗝️ Alice gera uma chave simétrica temporária
-// =========================
+const mensagemAlice = "Oi Bob, to enviando os relatórios de pagamento da empresa.";
+console.log("👩 Mensagem original que Alice quer enviar: ", chalk.green(`"${mensagemAlice}"`));
+
+// =====================================================================
+// ETAPA 3: ALICE GERA UMA CHAVE SIMÉTRICA (CHAVE DE SESSÃO)
+// Essa chave será usada para criptografar a mensagem original por ser rápida.
+// =====================================================================
+console.log(chalk.blue("\n--- ETAPA 3: Alice Gera a Chave de Sessão (Simétrica) ---"));
+
 const chaveSimetricaAlice = gerarChaveSimetrica();
-console.log("🔑 Alice gera chave simétrica:", chaveSimetricaAlice);
+console.log("🔑 Alice gera uma nova Chave Simétrica temporária (Chave de Sessão):", chalk.yellow(chaveSimetricaAlice));
 
-// =========================
-// 🔒 Alice criptografa a mensagem usando a chave simétrica
-// =========================
+// =====================================================================
+// ETAPA 4: ALICE CRIPTOGRAFA A MENSAGEM COM A CHAVE SIMÉTRICA
+// =====================================================================
+console.log(chalk.blue("\n--- ETAPA 4: Alice Criptografa a Mensagem original ---"));
+
 const mensagemCriptografada = criptografarSimetrico(mensagemAlice, chaveSimetricaAlice);
-console.log("🔒 Mensagem criptografada (simétrica):", mensagemCriptografada);
+console.log("🔒 Alice criptografa a mensagem original usando a Chave Simétrica:", chalk.blue(mensagemCriptografada));
+console.log("   A mensagem agora está ilegível para quem não tiver a Chave Simétrica.");
 
-// =========================
-// 🔐 Alice criptografa a chave simétrica com a chave pública de Bob
-// =========================
+// =====================================================================
+// ETAPA 5: ALICE CRIPTOGRAFA A CHAVE SIMÉTRICA COM A CHAVE PÚBLICA DE BOB
+// Isso garante que SÓ BOB poderá obter a chave simétrica.
+// =====================================================================
+console.log(chalk.blue("\n--- ETAPA 5: Alice Protege a Chave de Sessão ---"));
+
 const chaveSimetricaCriptografada = criptografarAssimetrica(String(chaveSimetricaAlice), chavePublicaBob);
-console.log("🗝️ Chave simétrica criptografada (assimétrica):", chaveSimetricaCriptografada);
+console.log(chalk.green("🗝️ Alice criptografa a Chave Simétrica (") + chalk.yellow(chaveSimetricaAlice) + chalk.green(") usando a Chave Pública de Bob:"), chalk.magenta(chaveSimetricaCriptografada));
 
-// =========================
-// 📦 Alice envia para Bob:
-// mensagemCriptografada + chaveSimetricaCriptografada
-// =========================
+// =====================================================================
+// ETAPA 6: ALICE ENVIA PARA BOB
+// =====================================================================
+console.log(chalk.bold.blue("\n--- ETAPA 6: Alice Envia os Dados ---"));
+console.log("📦 Alice envia para Bob (através de um canal potencialmente inseguro):");
+console.log("   - Mensagem criptografada (simétrica):", chalk.blue(mensagemCriptografada));
+console.log("   - Chave Simétrica criptografada (assimétrica):", chalk.magenta(chaveSimetricaCriptografada));
 
+// =====================================================================
+// ETAPA 7: BOB RECEBE E DESCRIPTOGRAFA A CHAVE SIMÉTRICA
+// Bob usa sua chave privada (que só ele tem) para obter a chave simétrica.
+// =====================================================================
+console.log(chalk.bold.blue("\n--- ETAPA 7: Bob Descriptografa a Chave de Sessão ---"));
 
-// =========================
-// 📥 Bob recebe a mensagem
-// =========================
+console.log("📥 Bob recebe os dados.");
+const chaveSimetricaRecebidaStr = descriptografarAssimetrica(chaveSimetricaCriptografada, chavePrivadaBob);
+const chaveSimetricaRecebida = parseInt(chaveSimetricaRecebidaStr);
+console.log("🗝️ Bob usa sua Chave Privada (🔒) para descriptografar a Chave Simétrica:", chalk.yellow(chaveSimetricaRecebida));
 
-// 🔓 Bob descriptografa a chave simétrica usando sua chave privada
-const chaveSimetricaRecebida = parseInt(
-  descriptografarAssimetrica(chaveSimetricaCriptografada, chavePrivadaBob)
-);
-console.log("\n🗝️ Bob descriptografa a chave simétrica:", chaveSimetricaRecebida);
+// =====================================================================
+// ETAPA 8: BOB DESCRIPTOGRAFA A MENSAGEM COM A CHAVE SIMÉTRICA
+// Agora que Bob tem a chave, ele pode ler a mensagem.
+// =====================================================================
+console.log(chalk.bold.blue("\n--- ETAPA 8: Bob Descriptografa a Mensagem original ---"));
 
-// 🔑 Bob usa a chave simétrica para descriptografar a mensagem
 const mensagemRecebida = descriptografarSimetrico(mensagemCriptografada, chaveSimetricaRecebida);
-console.log("✅ Bob lê a mensagem:", mensagemRecebida);
+console.log("✅ Bob usa a Chave Simétrica recuperada para descriptografar a mensagem: ", chalk.green(`"${mensagemRecebida}"`));
+console.log("   Mensagem lida com sucesso e segurança!");
 
+// =====================================================================
+// O QUE UM ATACANTE (bisbilhoteiro) VERIA E POR QUE A SEGURANÇA É MANTIDA
+// =====================================================================
+console.log(chalk.bold.red("\n--- 👹 O QUE UM ATACANTE (Bisbilhoteiro) VERIA? ---"));
 
-console.log("\n🚨 🕵️ Eve interceptou os seguintes dados trafegando na rede:");
-console.log("📦 Mensagem criptografada:", mensagemCriptografada);
-console.log("🗝️ Chave simétrica criptografada:", chaveSimetricaCriptografada);
+console.log("👹 Bisbilhoteiro (o atacante) interceptou os seguintes dados trafegando na rede:");
+console.log("   Mensagem criptografada (simétrica):", chalk.dim(mensagemCriptografada));
+console.log("   Chave simétrica criptografada (assimétrica):", chalk.dim(chaveSimetricaCriptografada));
 
-// Eve tenta ler a mensagem diretamente (não consegue)
-// A mensagem aparece como texto embaralhado
-console.log("\n❌ Eve tenta ler a mensagem (não descriptografada):", mensagemCriptografada);
-
-// Eve também captura a chave simétrica criptografada
-console.log("❌ Eve tenta obter a chave simétrica (não descriptografada):", chaveSimetricaCriptografada);
-
-// ❌ Sem acesso à chave privada de Bob, Eve NÃO CONSEGUE descriptografar a chave simétrica
-// ❌ Logo, também não consegue descriptografar a mensagem
-
-console.log("\n🔒 Resultado: Eve vê dados embaralhados, mas não entende a mensagem.");
