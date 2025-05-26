@@ -7,14 +7,18 @@ function gerarChaveSimetrica() {
 }
 
 function criptografarSimetrico(mensagem, chave) {
-  return mensagem
+  const criptografada = mensagem
     .split('')
     .map((caractere) => String.fromCharCode(caractere.charCodeAt(0) + chave))
     .join('')
+
+  return Buffer.from(criptografada, 'utf8').toString('base64')
 }
 
 function descriptografarSimetrico(mensagemCriptografada, chave) {
-  return mensagemCriptografada
+  const decriptografada = Buffer.from(mensagemCriptografada, 'base64').toString('utf8')
+
+  return decriptografada
     .split('')
     .map((caractere) => String.fromCharCode(caractere.charCodeAt(0) - chave))
     .join('')
