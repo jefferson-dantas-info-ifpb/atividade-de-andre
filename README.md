@@ -8,6 +8,65 @@ A Criptografia híbrida, como o próprio nome já diz, consiste em unir a segura
 <img src="https://imdtec.imd.ufrn.br/assets/imagens/seguranca-em-redes/seguranca_de_redes_a03_f07_c.jpg" />
 
 
+
+## 🧠 Como funciona?
+
+1. O remetente gera uma **chave de sessão** (simétrica).
+2. Os **dados** são criptografados usando essa chave (criptografia **simétrica**).
+3. A chave de sessão é criptografada com a **chave pública** do destinatário (criptografia **assimétrica**).
+4. O destinatário usa sua **chave privada** para recuperar a chave de sessão e, com ela, decifra os dados.
+
+## 🚀 Vantagens
+
+* ✅ Alta segurança na troca de chaves
+* ✅ Maior velocidade na criptografia de grandes volumes de dados
+* ✅ Combinação eficiente de desempenho e proteção
+
+## 📦 Onde é usada?
+
+## 🔐 Onde é usada a Criptografia Híbrida?
+
+### 🌐 1. **HTTPS / SSL / TLS**
+
+* **Descrição**: Quando você acessa sites seguros (começam com `https://`), o navegador e o servidor usam criptografia híbrida.
+* **Como**: A chave de sessão (simétrica) é trocada com segurança usando criptografia assimétrica no início da conexão (handshake).
+
+### 📧 2. **E-mails Criptografados (ex: PGP, S/MIME)**
+
+* **Descrição**: Soluções como **PGP (Pretty Good Privacy)** usam criptografia híbrida para proteger o conteúdo dos e-mails.
+* **Como**: O conteúdo do e-mail é criptografado com uma chave simétrica, e essa chave é criptografada com a chave pública do destinatário.
+
+### 📲 3. **Aplicativos de Mensagens Seguras**
+
+* **Exemplos**: **Signal**, **WhatsApp**, **Telegram (chats secretos)**.
+* **Como**: Mensagens são criptografadas com uma chave simétrica (eficiente), mas a chave é trocada com segurança via criptografia assimétrica.
+
+### ☁️ 4. **Armazenamento em Nuvem Seguro**
+
+* **Descrição**: Plataformas como **Google Drive**, **Dropbox** e outras soluções corporativas usam criptografia híbrida para proteger arquivos.
+* **Como**: Os arquivos são criptografados com uma chave simétrica. Essa chave é então protegida com criptografia assimétrica para acesso seguro.
+
+### 🧾 5. **Assinatura e Compartilhamento de Documentos**
+
+* **Exemplos**: Sistemas de assinatura digital como **DocuSign**, **Adobe Sign**.
+* **Como**: Documentos são criptografados com chaves simétricas e compartilhados com segurança usando chaves públicas dos destinatários.
+
+### 🛡️ 6. **VPNs e Redes Privadas Seguras**
+
+* **Descrição**: VPNs utilizam criptografia híbrida para estabelecer túneis seguros entre o cliente e o servidor.
+* **Como**: Durante a negociação da conexão, usa-se criptografia assimétrica para trocar a chave simétrica da sessão.
+
+### 💳 7. **Pagamentos Online e Comércio Eletrônico**
+
+* **Descrição**: Sistemas de pagamento, como gateways e bancos, utilizam criptografia híbrida para proteger transações.
+* **Como**: Os dados de pagamento são criptografados com simétrica, e a chave é trocada com criptografia assimétrica.
+
+---
+
+Se quiser, posso criar uma tabela visual ou diagrama explicando esses usos também.
+
+
+
 Primeiro execute o comando a seguir para instalar as dependências (para a biblioteca de testagem)
 
 ```bash
