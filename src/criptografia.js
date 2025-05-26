@@ -7,14 +7,18 @@ function gerarChaveSimetrica() {
 }
 
 function criptografarSimetrico(mensagem, chave) {
-  return mensagem
+  const criptografada = mensagem
     .split('')
     .map((caractere) => String.fromCharCode(caractere.charCodeAt(0) + chave))
     .join('')
+
+  return Buffer.from(criptografada, 'utf8').toString('base64')
 }
 
 function descriptografarSimetrico(mensagemCriptografada, chave) {
-  return mensagemCriptografada
+  const decriptografada = Buffer.from(mensagemCriptografada, 'base64').toString('utf8')
+
+  return decriptografada
     .split('')
     .map((caractere) => String.fromCharCode(caractere.charCodeAt(0) - chave))
     .join('')
@@ -49,21 +53,23 @@ function gerarChavesAssimetricas() {
 }
 
 function criptografarAssimetrica(mensagem, chavePublica) {
-  return mensagem
-    .split('')
-    .map((letra) => letra.charCodeAt(0))
-    .map((numero) => modPow(numero, chavePublica.e, chavePublica.n))
-    .map((numero) => String.fromCharCode(Number(numero)))
-    .join('')
+ const numerosCriptografados = String(mensagem)
+  .split('')
+  .map((letra) => letra.charCodeAt(0))
+  .map((numero) => modPow(numero, chavePublica.e, chavePublica.n));
+
+  // Converte os números criptografados para hexadecimal e os junta com '-'
+  return numerosCriptografados.map(n => n.toString(16)).join('-'); 
 }
 
 function descriptografarAssimetrica(mensagemCriptografada, chavePrivada) {
-  return mensagemCriptografada
-    .split('')
-    .map((letra) => letra.charCodeAt(0))
+  // Divide a mensagem criptografada em partes, converte de hexadecimal para inteiro
+  const numerosCriptografados = mensagemCriptografada.split('-').map(s => parseInt(s, 16));
+
+  return numerosCriptografados
     .map((numero) => modPow(numero, chavePrivada.d, chavePrivada.n))
     .map((numero) => String.fromCharCode(Number(numero)))
-    .join('')
+    .join('');
 }
 
 module.exports = {
