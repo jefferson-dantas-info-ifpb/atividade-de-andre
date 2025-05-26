@@ -18,13 +18,19 @@ A Criptografia híbrida, como o próprio nome já diz, consiste em unir a segura
 
 ## 🚀 Vantagens
 
-* ✅ Alta segurança na troca de chaves
-* ✅ Maior velocidade na criptografia de grandes volumes de dados
-* ✅ Combinação eficiente de desempenho e proteção
+- ✅ Alta segurança na troca de chaves
+- ✅ Maior velocidade na criptografia de grandes volumes de dados
+- ✅ Combinação eficiente de desempenho e proteção
+
+
+## Desvantagens:
+
+ - Alto consumo de recursos computacionais, especialmente em dispositivos com hardware limitado.
+ - Complexidade maior na implementação e gerenciamento do sistema.
+ - Aumento da latência e do uso de largura de banda devido à troca de chaves assimétricas.
+ - Dificuldade na manutenção e atualização do sistema.
 
 ## 📦 Onde é usada?
-
-## 🔐 Onde é usada a Criptografia Híbrida?
 
 ### 🌐 1. **HTTPS / SSL / TLS**
 
@@ -41,26 +47,30 @@ A Criptografia híbrida, como o próprio nome já diz, consiste em unir a segura
 * **Exemplos**: **Signal**, **WhatsApp**, **Telegram (chats secretos)**.
 * **Como**: Mensagens são criptografadas com uma chave simétrica (eficiente), mas a chave é trocada com segurança via criptografia assimétrica.
 
-### ☁️ 4. **Armazenamento em Nuvem Seguro**
-
-* **Descrição**: Plataformas como **Google Drive**, **Dropbox** e outras soluções corporativas usam criptografia híbrida para proteger arquivos.
-* **Como**: Os arquivos são criptografados com uma chave simétrica. Essa chave é então protegida com criptografia assimétrica para acesso seguro.
-
-### 🧾 5. **Assinatura e Compartilhamento de Documentos**
+### 🧾 4. **Assinatura e Compartilhamento de Documentos**
 
 * **Exemplos**: Sistemas de assinatura digital como **DocuSign**, **Adobe Sign**.
 * **Como**: Documentos são criptografados com chaves simétricas e compartilhados com segurança usando chaves públicas dos destinatários.
 
-### 🛡️ 6. **VPNs e Redes Privadas Seguras**
+### 🛡️ 5. **VPNs e Redes Privadas Seguras**
 
 * **Descrição**: VPNs utilizam criptografia híbrida para estabelecer túneis seguros entre o cliente e o servidor.
 * **Como**: Durante a negociação da conexão, usa-se criptografia assimétrica para trocar a chave simétrica da sessão.
 
-### 💳 7. **Pagamentos Online e Comércio Eletrônico**
+### 💳 6. **Pagamentos Online e Comércio Eletrônico**
 
 * **Descrição**: Sistemas de pagamento, como gateways e bancos, utilizam criptografia híbrida para proteger transações.
 * **Como**: Os dados de pagamento são criptografados com simétrica, e a chave é trocada com criptografia assimétrica.
 
+> [!CAUTION]
+> Usar criptografia híbrida em ambientes com recursos limitados (como IoT) pode causar lentidão, falhas de processamento ou consumo excessivo de energia, prejudicando a performance do sistema.
+>
+> Em contextos onde já existe uma chave simétrica segura previamente compartilhada, a adição da criptografia assimétrica só aumenta a complexidade sem ganho real em segurança.
+>
+> Para dados pequenos ou locais, o uso desnecessário de criptografia híbrida pode representar desperdício de recursos computacionais e dificultar a manutenção do sistema.
+
+
+<hr/>
 
 Primeiro execute o comando a seguir para instalar as dependências (para a biblioteca de testagem)
 
