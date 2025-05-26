@@ -61,11 +61,6 @@ A Criptografia híbrida, como o próprio nome já diz, consiste em unir a segura
 * **Descrição**: Sistemas de pagamento, como gateways e bancos, utilizam criptografia híbrida para proteger transações.
 * **Como**: Os dados de pagamento são criptografados com simétrica, e a chave é trocada com criptografia assimétrica.
 
----
-
-Se quiser, posso criar uma tabela visual ou diagrama explicando esses usos também.
-
-
 
 Primeiro execute o comando a seguir para instalar as dependências (para a biblioteca de testagem)
 
